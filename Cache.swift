@@ -16,10 +16,13 @@ public protocol CacheProtocol {
     
     ///return a data blob from disk. Your implementation must call success and failure closures, else a network request will not be sent.
     //It is recommend to background the IO opts and then run the success and failure closures on the main thread. This way large or slow IO calls don't block drawing
-    mutating func fromDisk(hash: String,success:((NSData) -> Void), failure:((NSError) -> Void))
+    mutating func fromDisk(hash: String,success:((NSData) -> Void), failure:((Void) -> Void))
     
     //add an item to the cache
     mutating func add(hash: String, data: NSData)
+    
+    //add an item to the cache
+    mutating func add(hash: String, url: NSURL)
     
     //remove all the items from memory. This can be used to relieve memory pressue.
     mutating func clearCache()
@@ -48,6 +51,12 @@ func ==(lhs: ImageNode, rhs: ImageNode) -> Bool {
 //The default implementation of the CacheProtocol
 public struct ImageCache: CacheProtocol {
     
+    //the amount of images to store in memory before pruning
+    public var imageCount = 50
+    
+    //the directory to save images to disk at
+    public var cacheDirectory: String!
+    
     //images keeps a mapping from url hashes to imageNodes, this way nodes can be found in constant time
     var nodeMap = Dictionary<String,ImageNode>()
     
@@ -57,8 +66,8 @@ public struct ImageCache: CacheProtocol {
     //keeps a track of the end point of the list
     var tail: ImageNode?
     
-    init() {
-        
+    init(_ cacheDirectory: String) {
+        self.cacheDirectory = cacheDirectory
     }
     
     ///checks the Dictionary for an image
@@ -72,17 +81,28 @@ public struct ImageCache: CacheProtocol {
     }
     
     ///return a image from disk
-    public mutating func fromDisk(hash: String,success:((NSData) -> Void), failure:((NSError) -> Void)) {
-        //file system calls...
+    public mutating func fromDisk(hash: String,success:((NSData) -> Void), failure:((Void) -> Void)) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), {
+            //do disk work
+            failure()
+        })
     }
     
+    //add an item from the disk to the cache. 
+    // Copies the file from the temp directory it comes from into the cacheDirectory then adds it to the memory cache
+    public mutating func add(hash: String, url: NSURL) {
+        //copy image, load into memory and then call add()
+    }
     //add an item to the cache
     public mutating func add(hash: String, data: NSData) {
         self.nodeMap.removeValueForKey(hash)
         let node = ImageNode(data,hash)
         self.nodeMap[hash] = node
         addToFront(node)
-        //need to evict/prune here
+        self.nodeMap.count
+        if self.nodeMap.count > self.imageCount {
+            prune()
+        }
     }
     
     ///clear the images in memory
@@ -90,6 +110,16 @@ public struct ImageCache: CacheProtocol {
         head = nil
         tail = nil
         nodeMap.removeAll(keepCapacity: true)
+    }
+    //cleans the cache up by removing LRU
+    private mutating func prune() {
+        if let t = tail {
+            let prev = t.prev
+            t.prev = nil
+            prev?.next = nil
+            self.nodeMap.removeValueForKey(t.hash)
+            tail = prev
+        }
     }
     //adds the node to the front of the list (it is the most recently used!)
     private mutating func addToFront(node: ImageNode) {
