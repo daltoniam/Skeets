@@ -10,37 +10,6 @@
 import Foundation
 import SwiftHTTP
 
-//this should go away at some point. Just a work around for poor swift substring support
-//http://openradar.appspot.com/radar?id=6373877630369792
-extension String {
-    
-    subscript (idx: Int) -> String
-        {
-        get
-        {
-            return self.substringWithRange(
-                Range( start: advance( self.startIndex, idx),
-                    end: advance( self.startIndex, idx + 1 )  )
-            )
-        }
-    }
-    
-    subscript (r: Range<Int>) -> String
-        {
-        get
-        {
-            return self.substringWithRange(
-                Range( start: advance( self.startIndex, r.startIndex),
-                    end: advance( self.startIndex, r.endIndex + 1 ))              )
-        }
-    }
-    
-    func substringFrom(start: Int, to: Int) -> String
-    {
-        return (((self as NSString).substringFromIndex(start)) as NSString).substringToIndex(to - start + 1)
-    }
-}
-
 public class ImageManager {
     public var cache: CacheProtocol!
     
@@ -86,14 +55,14 @@ public class ImageManager {
     public func hash(url: String) -> String {
         var hash = url
         let len = countElements(url)-1
-        if hash[len] == "/" {
-            hash = hash[0..<len]
+        if hash[advance(hash.startIndex,len)] == "/" {
+            hash = hash[hash.startIndex..<advance(hash.startIndex,len)]
         }
         //hmmm, thinking about this...
         //not sure if I want to do the bridging and do CC_MD5
         //or do a simpler hashing algorithm and just hand roll it.
         //CC_MD5(hash, len, result)
-        return hash
+        return "\(hash.hash)"
     }
     //Image manager singleton to manage displaying/caching images
     public class var sharedManager : ImageManager {
