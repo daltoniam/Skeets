@@ -89,9 +89,9 @@ public struct ImageCache: CacheProtocol {
     }
     
     //add an item from the disk to the cache. 
-    // Copies the file from the temp directory it comes from into the cacheDirectory then adds it to the memory cache
+    //Copies the file from the temp directory into the cacheDirectory, then adds it to the memory cache
     public mutating func add(hash: String, url: NSURL) {
-        //copy image, load into memory and then call add()
+        //copy the image to the cache directory, then load into memory via add()
     }
     //add an item to the cache
     public mutating func add(hash: String, data: NSData) {
