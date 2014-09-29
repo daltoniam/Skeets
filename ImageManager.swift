@@ -9,14 +9,14 @@
 
 import Foundation
 
-class ImageManager {
-    var cache: CacheProtocol!
+public class ImageManager {
+    public var cache: CacheProtocol!
     
-    init(cacheDirectory: String) {
+    public init(cacheDirectory: String) {
         cache = ImageCache(cacheDirectory)
     }
     //fetch an image from the network
-    func fetch(url: String, progress:((Double) -> Void)!, success:((NSData) -> Void)!, failure:((NSError) -> Void)!) {
+    public func fetch(url: String, progress:((Double) -> Void)!, success:((NSData) -> Void)!, failure:((NSError) -> Void)!) {
         let hash = url //hash the URL here
         let data = cache.fromMemory(hash)
         if data != nil {
@@ -32,7 +32,7 @@ class ImageManager {
     }
     
     //image manager singleton to manage displaying/caching images
-    class var sharedManager : ImageManager {
+    public class var sharedManager : ImageManager {
         
     struct Static {
         static let instance : ImageManager = ImageManager(cacheDirectory: "")
