@@ -14,7 +14,12 @@ public class ImageManager {
     public var cache: CacheProtocol!
     
     public init(cacheDirectory: String) {
-        cache = ImageCache(cacheDirectory)
+        var dir = cacheDirectory
+        if dir == "" {
+            let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+            dir = "\(paths[0])" //use default documents folder, not ideal but better than the cache not working
+        }
+        cache = ImageCache(dir)
     }
     //fetch an image from the network
     public func fetch(url: String, progress:((Double) -> Void)!, success:((NSData) -> Void)!, failure:((NSError) -> Void)!) {

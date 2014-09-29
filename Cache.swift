@@ -11,6 +11,10 @@ import Foundation
 
 //This protocol can be implemented for custom image caching.
 public protocol CacheProtocol {
+    
+    //the directory to be used for saving images to disk
+    var diskDirectory: String! { get set }
+    
     ///return a data blob from memory. Do NOT do long blocking calls IO calls in this method, only intend for fast hash lookups.
     mutating func fromMemory(hash: String) -> NSData?
     
@@ -54,8 +58,11 @@ public struct ImageCache: CacheProtocol {
     //the amount of images to store in memory before pruning
     public var imageCount = 50
     
-    //the directory to save images to disk at
-    public var cacheDirectory: String!
+    //the length of time a image is saved to disk before it expires (int seconds).
+    public var diskAge = 60 * 60 * 24 //24 hours
+    
+    //the directory to be used for saving images to disk
+    public var diskDirectory: String!
     
     //images keeps a mapping from url hashes to imageNodes, this way nodes can be found in constant time
     var nodeMap = Dictionary<String,ImageNode>()
@@ -67,7 +74,7 @@ public struct ImageCache: CacheProtocol {
     var tail: ImageNode?
     
     init(_ cacheDirectory: String) {
-        self.cacheDirectory = cacheDirectory
+        self.diskDirectory = cacheDirectory
     }
     
     ///checks the Dictionary for an image
@@ -83,15 +90,41 @@ public struct ImageCache: CacheProtocol {
     ///return a image from disk
     public mutating func fromDisk(hash: String,success:((NSData) -> Void), failure:((Void) -> Void)) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), {
-            //do disk work
+            let cachePath = "\(self.diskDirectory)/\(hash)"
+            let expireDate = NSDate(timeIntervalSinceNow: NSTimeInterval(-self.diskAge))
+            let fileManager = NSFileManager.defaultManager()
+            if fileManager.fileExistsAtPath(cachePath) {
+                let attrs = fileManager.attributesOfItemAtPath(cachePath, error: nil)
+                let modifyDate = attrs?[NSFileModificationDate] as NSDate
+                if modifyDate.laterDate(expireDate).isEqualToDate(expireDate) {
+                    fileManager.removeItemAtPath(cachePath, error: nil)
+                    failure()
+                } else {
+                    let data = fileManager.contentsAtPath(cachePath)
+                    if let d = data {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            success(d)
+                        })
+                    }
+                    return
+                }
+            }
             failure()
         })
     }
     
     //add an item from the disk to the cache. 
-    //Copies the file from the temp directory into the cacheDirectory, then adds it to the memory cache
+    //Moves the file from the temp directory into the cacheDirectory, then adds it to the memory cache
     public mutating func add(hash: String, url: NSURL) {
-        //copy the image to the cache directory, then load into memory via add()
+        let cachePath = "\(self.diskDirectory)/\(hash)"
+        let moveUrl = NSURL(fileURLWithPath: cachePath)
+        let fileManager = NSFileManager.defaultManager()
+        fileManager.removeItemAtURL(moveUrl, error: nil)
+        fileManager.moveItemAtURL(url, toURL: moveUrl, error: nil)
+        let data = fileManager.contentsAtPath(cachePath)
+        if let d = data {
+            add(hash, data: d)
+        }
     }
     //add an item to the cache
     public mutating func add(hash: String, data: NSData) {
