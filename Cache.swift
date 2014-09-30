@@ -16,20 +16,24 @@ public protocol CacheProtocol {
     var diskDirectory: String! { get set }
     
     ///return a data blob from memory. Do NOT do long blocking calls IO calls in this method, only intend for fast hash lookups.
-    mutating func fromMemory(hash: String) -> NSData?
+    func fromMemory(hash: String) -> NSData?
     
     ///return a data blob from disk. Your implementation must call success and failure closures, else a network request will not be sent.
     //It is recommend to background the IO opts and then run the success and failure closures on the main thread. This way large or slow IO calls don't block drawing
-    mutating func fromDisk(hash: String,success:((NSData) -> Void), failure:((Void) -> Void))
+    func fromDisk(hash: String,success:((NSData) -> Void), failure:((Void) -> Void))
     
     //add an item to the cache
-    mutating func add(hash: String, data: NSData)
+    func add(hash: String, data: NSData)
     
     //add an item to the cache
-    mutating func add(hash: String, url: NSURL)
+    func add(hash: String, url: NSURL)
     
     //remove all the items from memory. This can be used to relieve memory pressue.
-    mutating func clearCache()
+    func clearCache()
+    
+    //remove all the expired items from the disk. This can be used to relieve disk space constraints.
+    //Recommend that you run this on a background thread.
+    func cleanDisk()
 }
 
 //The default image cache implemention. This uses a combo of a Dictionary and custom LinkedList to cache. 
@@ -53,7 +57,7 @@ func ==(lhs: ImageNode, rhs: ImageNode) -> Bool {
     return lhs.hash == rhs.hash
 }
 //The default implementation of the CacheProtocol
-public struct ImageCache: CacheProtocol {
+public class ImageCache: CacheProtocol {
     
     //the amount of images to store in memory before pruning
     public var imageCount = 50
@@ -78,7 +82,7 @@ public struct ImageCache: CacheProtocol {
     }
     
     ///checks the Dictionary for an image
-    public mutating func fromMemory(hash: String) -> NSData? {
+    public func fromMemory(hash: String) -> NSData? {
         let node = self.nodeMap[hash]
         if let n = node {
             addToFront(n)
@@ -88,7 +92,7 @@ public struct ImageCache: CacheProtocol {
     }
     
     ///return a image from disk
-    public mutating func fromDisk(hash: String,success:((NSData) -> Void), failure:((Void) -> Void)) {
+    public func fromDisk(hash: String,success:((NSData) -> Void), failure:((Void) -> Void)) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), {
             let cachePath = "\(self.diskDirectory)/\(hash)"
             let expireDate = NSDate(timeIntervalSinceNow: NSTimeInterval(-self.diskAge))
@@ -103,6 +107,7 @@ public struct ImageCache: CacheProtocol {
                     let data = fileManager.contentsAtPath(cachePath)
                     if let d = data {
                         dispatch_async(dispatch_get_main_queue(), {
+                            self.add(hash, data: d)
                             success(d)
                         })
                     }
@@ -115,7 +120,7 @@ public struct ImageCache: CacheProtocol {
     
     //add an item from the disk to the cache. 
     //Moves the file from the temp directory into the cacheDirectory, then adds it to the memory cache
-    public mutating func add(hash: String, url: NSURL) {
+    public func add(hash: String, url: NSURL) {
         let cachePath = "\(self.diskDirectory)/\(hash)"
         let moveUrl = NSURL(fileURLWithPath: cachePath)
         let fileManager = NSFileManager.defaultManager()
@@ -127,25 +132,55 @@ public struct ImageCache: CacheProtocol {
         }
     }
     //add an item to the cache
-    public mutating func add(hash: String, data: NSData) {
-        self.nodeMap.removeValueForKey(hash)
-        let node = ImageNode(data,hash)
-        self.nodeMap[hash] = node
+    public func add(hash: String, data: NSData) {
+        var node: ImageNode! = self.nodeMap[hash]
+        if node != nil {
+            node.data = data
+        } else {
+            node = ImageNode(data,hash)
+            self.nodeMap[hash] = node
+        }
         addToFront(node)
-        self.nodeMap.count
         if self.nodeMap.count > self.imageCount {
             prune()
         }
     }
     
     ///clear the images in memory
-    public mutating func clearCache() {
+    public func clearCache() {
         head = nil
         tail = nil
         nodeMap.removeAll(keepCapacity: true)
     }
+    public func cleanDisk() {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), {
+            let fileManager = NSFileManager.defaultManager()
+            let diskUrl = NSURL(fileURLWithPath: self.diskDirectory, isDirectory: true)
+            let expireDate = NSDate(timeIntervalSinceNow: NSTimeInterval(-self.diskAge))
+            let resources = [NSURLIsDirectoryKey, NSURLContentModificationDateKey, NSURLTotalFileAllocatedSizeKey]
+            
+            let enumerator = fileManager.enumeratorAtURL(diskUrl, includingPropertiesForKeys: resources,
+                options: NSDirectoryEnumerationOptions.SkipsHiddenFiles, errorHandler: nil)
+            let array = enumerator?.allObjects
+            for file in array! {
+                if let fileUrl = file as? NSURL {
+                    let values = fileUrl.resourceValuesForKeys(resources, error: nil)!
+                    if let num = values[NSURLIsDirectoryKey] as? NSNumber  {
+                        if num.boolValue {
+                            continue
+                        }
+                    }
+                    if let modifyDate = values[NSURLContentModificationDateKey] as? NSDate  {
+                        if modifyDate.laterDate(expireDate).isEqualToDate(expireDate) {
+                            fileManager.removeItemAtURL(fileUrl, error: nil)
+                        }
+                    }
+                }
+            }
+        })
+    }
     //cleans the cache up by removing LRU
-    private mutating func prune() {
+    private func prune() {
         if let t = tail {
             let prev = t.prev
             t.prev = nil
@@ -155,7 +190,7 @@ public struct ImageCache: CacheProtocol {
         }
     }
     //adds the node to the front of the list (it is the most recently used!)
-    private mutating func addToFront(node: ImageNode) {
+    private func addToFront(node: ImageNode) {
         
         //if this node is the tail, reassign tail to the prev node of the tail
         if let t = tail {
