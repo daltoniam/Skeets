@@ -71,7 +71,7 @@ ImageManager.sharedManager.cache.cleanDisk()
 
 Skeets requires at least iOS 8/OSX 10.10 or above.
 
-Also Skeets depends off [SwiftHTTP](https://github.com/daltoniam/SwiftHTTP). Make sure to import that framework as well before using Skeets.
+Skeets depends on [SwiftHTTP](https://github.com/daltoniam/SwiftHTTP). Make sure to import that framework as well before using Skeets.
 
 ## Installation
 
