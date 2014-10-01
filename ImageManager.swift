@@ -10,6 +10,8 @@
 import Foundation
 import SwiftHTTP
 
+///This stores the blocks that come from the fetch method. 
+///This is used to ensure only one request goes out for multiple of the same url.
 private class BlockHolder {
     var progress:((Double) -> Void)?
     var success:((NSData) -> Void)?
@@ -20,10 +22,19 @@ private class BlockHolder {
         self.failure = failure
     }
 }
+///This is the main class. It handles interaction with cache and ensuring only one request goes out for multiples of the same url
 public class ImageManager {
-    public var cache: CacheProtocol!
+    ///The cache. This is anything that responses to the cache protocol. By default it uses the provided ImageCache.
+    public var cache: CacheProtocol
+    
+    ///This is used so multiple request for the same url only sends one request
     private var pending = Dictionary<String,Array<BlockHolder>>()
     
+    /**
+    Initializes a new ImageManager
+    
+    :param: cacheDirectory is the directory on disk to save cached images to.
+    */
     public init(cacheDirectory: String) {
         var dir = cacheDirectory
         if dir == "" {
@@ -32,7 +43,16 @@ public class ImageManager {
         }
         cache = ImageCache(dir)
     }
-    //fetch an image from the network
+    /**
+    Fetches the image from the nearest location avaliable.
+    
+    :param: url The url you would like to make a request to.
+    :param: method The HTTP method/verb for the request.
+    :param: progress The closure that is run when reporting download progress via HTTP.
+    :param: success The closure that is run on a sucessful image retrieval.
+    :param: failure The closure that is run on a failed HTTP Request.
+
+    */
     public func fetch(url: String, progress:((Double) -> Void)!, success:((NSData) -> Void)!, failure:((NSError) -> Void)!) {
         let hash = self.hash(url)
         //check from memory first
@@ -70,7 +90,7 @@ public class ImageManager {
         }
     }
     
-    //run all the success methods
+    ///run all the success closures
     private func doSuccess(hash: String, data: NSData) {
         let holder = self.pending[hash]
         if let array = holder {
@@ -83,7 +103,7 @@ public class ImageManager {
         }
     }
     
-    //run all the failure methods
+    ///run all the failure closures
     private func doFailure(hash: String, error: NSError) {
         let holder = self.pending[hash]
         if let array = holder {
@@ -96,7 +116,7 @@ public class ImageManager {
         }
     }
     
-    //run all the success methods
+    ///run all the progress closures
     private func doProgress(hash: String, status: Double) {
         let holder = self.pending[hash]
         if let array = holder {
@@ -108,22 +128,22 @@ public class ImageManager {
         }
     }
     
-    //not staying public, just for testing.
-    private func hash(url: String) -> String {
-        var hash = url
+    ///Hashes the url so it can be saved to disk.
+    private func hash(u: String) -> String {
+        var url = u
         let len = countElements(url)-1
-        if hash[advance(hash.startIndex,len)] == "/" {
-            hash = hash[hash.startIndex..<advance(hash.startIndex,len)]
+        if url[advance(url.startIndex,len)] == "/" {
+            url = url[url.startIndex..<advance(url.startIndex,len)]
         }
-        //hmmm, thinking about this...
-        //not sure if I want to do the bridging and do CC_MD5
-        //or do a simpler hashing algorithm and just hand roll it.
-        //CC_MD5(hash, len, result)
-        let data = hash.dataUsingEncoding(NSUTF8StringEncoding)
-        let hashedUrl = data?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(0))
-        return hashedUrl!
+        let size: Int = countElements(url)
+        var hash: Int64 = Int64(size / 2)
+        for codeUnit in url.utf8 {
+            hash = hash + (Int(codeUnit) * 101)
+        }
+        return "\(hash)"
     }
-    //Image manager singleton to manage displaying/caching images
+    ///Image manager singleton to manage displaying/caching images.
+    ///This is normally the primary vehicle for displaying your images.
     public class var sharedManager : ImageManager {
         
     struct Static {
