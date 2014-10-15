@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C3BE81219ED71C600FEDF2B /* SwiftHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C3BE81119ED71C600FEDF2B /* SwiftHTTP.framework */; };
 		5CBDE7D919D9E9DB004A4172 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7D719D9E9DB004A4172 /* Cache.swift */; };
 		5CBDE7DA19D9E9DC004A4172 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7D819D9E9DB004A4172 /* ImageManager.swift */; };
 		5CBDE7DE19D9EA1C004A4172 /* SkeetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7DC19D9EA12004A4172 /* SkeetsTests.swift */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C3BE81119ED71C600FEDF2B /* SwiftHTTP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftHTTP.framework; path = "../SwiftHTTP/build/Debug-iphoneos/SwiftHTTP.framework"; sourceTree = "<group>"; };
 		5CBDE7BC19D9E90D004A4172 /* Skeets.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Skeets.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CBDE7C019D9E90D004A4172 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5CBDE7C719D9E90D004A4172 /* SkeetsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkeetsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -29,6 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C3BE81219ED71C600FEDF2B /* SwiftHTTP.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,6 +48,7 @@
 		5CBDE7B219D9E90D004A4172 = {
 			isa = PBXGroup;
 			children = (
+				5C3BE81119ED71C600FEDF2B /* SwiftHTTP.framework */,
 				5CBDE7BE19D9E90D004A4172 /* Skeets */,
 				5CBDE7C819D9E90D004A4172 /* SkeetsTests */,
 				5CBDE7BD19D9E90D004A4172 /* Products */,
@@ -311,6 +315,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/dalton/Code/Swift/SwiftHTTP/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -328,6 +336,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/dalton/Code/Swift/SwiftHTTP/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

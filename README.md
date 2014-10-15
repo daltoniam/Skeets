@@ -84,7 +84,7 @@ Add the `skeets.xcodeproj` to your Xcode project. Once that is complete, in your
 
 - [ ] Complete Docs
 - [ ] Add Unit Tests
-- [ ] Add Swallow Installation Docs
+- [ ] Add Rouge Installation Docs
 
 ## License
 
