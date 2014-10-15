@@ -84,7 +84,7 @@ Add the `skeets.xcodeproj` to your Xcode project. Once that is complete, in your
 
 - [ ] Complete Docs
 - [ ] Add Unit Tests
-- [ ] Add Rouge Installation Docs
+- [ ] Add [Rouge](https://github.com/acmacalister/Rouge) Installation Docs
 
 ## License
 
