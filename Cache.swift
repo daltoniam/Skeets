@@ -153,8 +153,8 @@ public class ImageCache: CacheProtocol {
         let cachePath = "\(self.diskDirectory)/\(hash)"
         let moveUrl = NSURL(fileURLWithPath: cachePath)
         let fileManager = NSFileManager.defaultManager()
-        fileManager.removeItemAtURL(moveUrl, error: nil)
-        fileManager.moveItemAtURL(url, toURL: moveUrl, error: nil)
+        fileManager.removeItemAtURL(moveUrl!, error: nil)
+        fileManager.moveItemAtURL(url, toURL: moveUrl!, error: nil)
         let data = fileManager.contentsAtPath(cachePath)
         if let d = data {
             add(hash, data: d)
@@ -204,7 +204,7 @@ public class ImageCache: CacheProtocol {
             let expireDate = NSDate(timeIntervalSinceNow: NSTimeInterval(-self.diskAge))
             let resources = [NSURLIsDirectoryKey, NSURLContentModificationDateKey, NSURLTotalFileAllocatedSizeKey]
             
-            let enumerator = fileManager.enumeratorAtURL(diskUrl, includingPropertiesForKeys: resources,
+            let enumerator = fileManager.enumeratorAtURL(diskUrl!, includingPropertiesForKeys: resources,
                 options: NSDirectoryEnumerationOptions.SkipsHiddenFiles, errorHandler: nil)
             let array = enumerator?.allObjects
             for file in array! {
