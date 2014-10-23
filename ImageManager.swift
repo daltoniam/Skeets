@@ -84,7 +84,7 @@ public class ImageManager {
                         }, success: { (response: HTTPResponse) in
                             self.cache.add(hash, url: response.responseObject! as NSURL)
                             self.doSuccess(hash, data: self.cache.fromMemory(hash)!)
-                        }, failure: { (error: NSError) in
+                        }, failure: { (error: NSError, response: HTTPResponse?) in
                             self.doFailure(hash, error: error)
                     })
             })
