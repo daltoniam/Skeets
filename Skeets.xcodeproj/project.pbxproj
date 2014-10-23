@@ -7,15 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5C3BE81219ED71C600FEDF2B /* SwiftHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C3BE81119ED71C600FEDF2B /* SwiftHTTP.framework */; };
+		5C68652719F9A880001E3332 /* SkeetsOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C68651C19F9A880001E3332 /* SkeetsOSX.framework */; };
+		5C68653519F9A8ED001E3332 /* SkeetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7DC19D9EA12004A4172 /* SkeetsTests.swift */; };
+		5C68653619F9A8F5001E3332 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7D719D9E9DB004A4172 /* Cache.swift */; };
+		5C68653719F9A8F5001E3332 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7D819D9E9DB004A4172 /* ImageManager.swift */; };
+		5C68653819F9A8FA001E3332 /* Skeets.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CBDE7DF19D9EC26004A4172 /* Skeets.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5CBDE7D919D9E9DB004A4172 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7D719D9E9DB004A4172 /* Cache.swift */; };
 		5CBDE7DA19D9E9DC004A4172 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7D819D9E9DB004A4172 /* ImageManager.swift */; };
 		5CBDE7DE19D9EA1C004A4172 /* SkeetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7DC19D9EA12004A4172 /* SkeetsTests.swift */; };
 		5CBDE7E019D9EC26004A4172 /* Skeets.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CBDE7DF19D9EC26004A4172 /* Skeets.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5C68652819F9A880001E3332 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5CBDE7B319D9E90D004A4172 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5C68651B19F9A880001E3332;
+			remoteInfo = SkeetsOSX;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		5C3BE81119ED71C600FEDF2B /* SwiftHTTP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftHTTP.framework; path = "../SwiftHTTP/build/Debug-iphoneos/SwiftHTTP.framework"; sourceTree = "<group>"; };
+		5C68651C19F9A880001E3332 /* SkeetsOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SkeetsOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C68652619F9A880001E3332 /* SkeetsOSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkeetsOSXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CBDE7BC19D9E90D004A4172 /* Skeets.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Skeets.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CBDE7C019D9E90D004A4172 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5CBDE7C719D9E90D004A4172 /* SkeetsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkeetsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -27,11 +42,25 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5C68651819F9A880001E3332 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C68652319F9A880001E3332 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C68652719F9A880001E3332 /* SkeetsOSX.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5CBDE7B819D9E90D004A4172 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C3BE81219ED71C600FEDF2B /* SwiftHTTP.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -48,7 +77,6 @@
 		5CBDE7B219D9E90D004A4172 = {
 			isa = PBXGroup;
 			children = (
-				5C3BE81119ED71C600FEDF2B /* SwiftHTTP.framework */,
 				5CBDE7BE19D9E90D004A4172 /* Skeets */,
 				5CBDE7C819D9E90D004A4172 /* SkeetsTests */,
 				5CBDE7BD19D9E90D004A4172 /* Products */,
@@ -60,6 +88,8 @@
 			children = (
 				5CBDE7BC19D9E90D004A4172 /* Skeets.framework */,
 				5CBDE7C719D9E90D004A4172 /* SkeetsTests.xctest */,
+				5C68651C19F9A880001E3332 /* SkeetsOSX.framework */,
+				5C68652619F9A880001E3332 /* SkeetsOSXTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -103,6 +133,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		5C68651919F9A880001E3332 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C68653819F9A8FA001E3332 /* Skeets.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5CBDE7B919D9E90D004A4172 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -114,6 +152,42 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		5C68651B19F9A880001E3332 /* SkeetsOSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C68652F19F9A880001E3332 /* Build configuration list for PBXNativeTarget "SkeetsOSX" */;
+			buildPhases = (
+				5C68651719F9A880001E3332 /* Sources */,
+				5C68651819F9A880001E3332 /* Frameworks */,
+				5C68651919F9A880001E3332 /* Headers */,
+				5C68651A19F9A880001E3332 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SkeetsOSX;
+			productName = SkeetsOSX;
+			productReference = 5C68651C19F9A880001E3332 /* SkeetsOSX.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		5C68652519F9A880001E3332 /* SkeetsOSXTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C68653219F9A880001E3332 /* Build configuration list for PBXNativeTarget "SkeetsOSXTests" */;
+			buildPhases = (
+				5C68652219F9A880001E3332 /* Sources */,
+				5C68652319F9A880001E3332 /* Frameworks */,
+				5C68652419F9A880001E3332 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5C68652919F9A880001E3332 /* PBXTargetDependency */,
+			);
+			name = SkeetsOSXTests;
+			productName = SkeetsOSXTests;
+			productReference = 5C68652619F9A880001E3332 /* SkeetsOSXTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		5CBDE7BB19D9E90D004A4172 /* Skeets */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5CBDE7CF19D9E90D004A4172 /* Build configuration list for PBXNativeTarget "Skeets" */;
@@ -158,6 +232,12 @@
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = vluxe;
 				TargetAttributes = {
+					5C68651B19F9A880001E3332 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					5C68652519F9A880001E3332 = {
+						CreatedOnToolsVersion = 6.1;
+					};
 					5CBDE7BB19D9E90D004A4172 = {
 						CreatedOnToolsVersion = 6.0.1;
 					};
@@ -180,11 +260,27 @@
 			targets = (
 				5CBDE7BB19D9E90D004A4172 /* Skeets */,
 				5CBDE7C619D9E90D004A4172 /* SkeetsTests */,
+				5C68651B19F9A880001E3332 /* SkeetsOSX */,
+				5C68652519F9A880001E3332 /* SkeetsOSXTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5C68651A19F9A880001E3332 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C68652419F9A880001E3332 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5CBDE7BA19D9E90D004A4172 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -202,6 +298,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5C68651719F9A880001E3332 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C68653619F9A8F5001E3332 /* Cache.swift in Sources */,
+				5C68653719F9A8F5001E3332 /* ImageManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C68652219F9A880001E3332 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C68653519F9A8ED001E3332 /* SkeetsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5CBDE7B719D9E90D004A4172 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -221,7 +334,95 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		5C68652919F9A880001E3332 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5C68651B19F9A880001E3332 /* SkeetsOSX */;
+			targetProxy = 5C68652819F9A880001E3332 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		5C68653019F9A880001E3332 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		5C68653119F9A880001E3332 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		5C68653319F9A880001E3332 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5C68653419F9A880001E3332 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 		5CBDE7CD19D9E90D004A4172 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -381,6 +582,22 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5C68652F19F9A880001E3332 /* Build configuration list for PBXNativeTarget "SkeetsOSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C68653019F9A880001E3332 /* Debug */,
+				5C68653119F9A880001E3332 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5C68653219F9A880001E3332 /* Build configuration list for PBXNativeTarget "SkeetsOSXTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C68653319F9A880001E3332 /* Debug */,
+				5C68653419F9A880001E3332 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		5CBDE7B619D9E90D004A4172 /* Build configuration list for PBXProject "Skeets" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

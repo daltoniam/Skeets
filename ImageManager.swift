@@ -8,7 +8,11 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 import Foundation
+#if os(iOS)
 import SwiftHTTP
+#elseif os(OSX)
+import SwiftHTTPOSX
+#endif
 
 ///This stores the blocks that come from the fetch method. 
 ///This is used to ensure only one request goes out for multiple of the same url.
