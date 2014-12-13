@@ -14,12 +14,17 @@ Skeets is a networking image library that fetches, caches, and displays images v
 - Simple concise codebase at just a few hundred LOC.
 - handles redundant image requests, so only one request is sent for multiple queries
 
+Full article here: [Vluxe](http://vluxe.io/skeets.html)
+
 ## Example
 
 First thing is to import the framework. See the Installation instructions, on how to add the framework to your project.
 
 ```swift
+//iOS
 import Skeets
+//OS X
+import SkeetsOSX
 ```
 
 Once imported, you can start requesting images.
