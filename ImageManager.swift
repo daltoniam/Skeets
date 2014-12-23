@@ -42,8 +42,15 @@ public class ImageManager {
     public init(cacheDirectory: String) {
         var dir = cacheDirectory
         if dir == "" {
+            #if os(iOS)
             let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
             dir = "\(paths[0])" //use default documents folder, not ideal but better than the cache not working
+            #elseif os(OSX)
+            let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
+            if let name = NSBundle.mainBundle().bundleIdentifier {
+                dir = "\(paths[0])/\(name)"
+            }
+            #endif
         }
         cache = ImageCache(dir)
     }

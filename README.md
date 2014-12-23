@@ -37,6 +37,11 @@ self.view.addSubview(imageView)
 //set the cache directory. Only have to do this once since `sharedManager` is a singleton
 let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
 ImageManager.sharedManager.cache.diskDirectory = "\(paths[0])/ImageCache"
+
+//for OSX
+//let paths = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
+//ImageManager.sharedManager.cache.diskDirectory = "\(paths[0])/\(NSBundle.mainBundle().bundleIdentifier!)/ImageCache"
+
 ImageManager.sharedManager.cache.cleanDisk()
 
 //fetch the image
