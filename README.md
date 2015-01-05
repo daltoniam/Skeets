@@ -88,13 +88,40 @@ Skeets depends on [SwiftHTTP](https://github.com/daltoniam/SwiftHTTP). Make sure
 
 ## Installation
 
-Add the `skeets.xcodeproj` to your Xcode project. Once that is complete, in your "Build Phases" add the `skeets.framework` to your "Link Binary with Libraries" phase.
+### Cocoapods
+
+```
+Coming soon...(Hopefully!)
+```
+
+### Carthage
+
+Check out the [Carthage](https://github.com/Carthage/Carthage) docs on how to add a install. The `Skeets` framework is already setup with shared schemes.
+
+[Carthage Install](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application)
+
+### Rogue
+
+First see the [installation docs](https://github.com/acmacalister/Rogue) for how to install Rogue.
+
+To install Skeets run the command below in the directory you created the rogue file.
+
+```
+rogue add https://github.com/daltoniam/Skeets
+```
+
+Next open the `libs` folder and add the `Skeets.xcodeproj` to your Xcode project. Once that is complete, in your "Build Phases" add the `Skeets.framework` to your "Link Binary with Libraries" phase. Make sure to add the `libs` folder to your `.gitignore` file.
+
+### Other
+
+Simply grab the framework (either via git submodule or another package manager).
+
+Add the `Skeets.xcodeproj` to your Xcode project. Once that is complete, in your "Build Phases" add the `Skeets.framework` to your "Link Binary with Libraries" phase.
 
 ## TODOs
 
 - [ ] Complete Docs
 - [ ] Add Unit Tests
-- [ ] Add [Rouge](https://github.com/acmacalister/Rouge) Installation Docs
 
 ## License
 

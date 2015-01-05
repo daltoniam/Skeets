@@ -12,7 +12,6 @@
 		5C68653619F9A8F5001E3332 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7D719D9E9DB004A4172 /* Cache.swift */; };
 		5C68653719F9A8F5001E3332 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7D819D9E9DB004A4172 /* ImageManager.swift */; };
 		5C68653819F9A8FA001E3332 /* Skeets.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CBDE7DF19D9EC26004A4172 /* Skeets.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5C68655F19FABFCE001E3332 /* SwiftHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C68655E19FABFCE001E3332 /* SwiftHTTP.framework */; };
 		5CBDE7D919D9E9DB004A4172 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7D719D9E9DB004A4172 /* Cache.swift */; };
 		5CBDE7DA19D9E9DC004A4172 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7D819D9E9DB004A4172 /* ImageManager.swift */; };
 		5CBDE7DE19D9EA1C004A4172 /* SkeetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7DC19D9EA12004A4172 /* SkeetsTests.swift */; };
@@ -32,8 +31,6 @@
 /* Begin PBXFileReference section */
 		5C68651C19F9A880001E3332 /* SkeetsOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SkeetsOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C68652619F9A880001E3332 /* SkeetsOSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkeetsOSXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5C68655C19FABE6E001E3332 /* SwiftHTTP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftHTTP.framework; path = "../SwiftHTTP/build/Debug-iphoneos/SwiftHTTP.framework"; sourceTree = "<group>"; };
-		5C68655E19FABFCE001E3332 /* SwiftHTTP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftHTTP.framework; path = "../SwiftHTTP/build/Debug-iphoneos/SwiftHTTP.framework"; sourceTree = "<group>"; };
 		5CBDE7BC19D9E90D004A4172 /* Skeets.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Skeets.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CBDE7C019D9E90D004A4172 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5CBDE7C719D9E90D004A4172 /* SkeetsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkeetsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,7 +61,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C68655F19FABFCE001E3332 /* SwiftHTTP.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,8 +77,6 @@
 		5CBDE7B219D9E90D004A4172 = {
 			isa = PBXGroup;
 			children = (
-				5C68655E19FABFCE001E3332 /* SwiftHTTP.framework */,
-				5C68655C19FABE6E001E3332 /* SwiftHTTP.framework */,
 				5CBDE7BE19D9E90D004A4172 /* Skeets */,
 				5CBDE7C819D9E90D004A4172 /* SkeetsTests */,
 				5CBDE7BD19D9E90D004A4172 /* Products */,
@@ -597,6 +591,7 @@
 				5C68653119F9A880001E3332 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5C68653219F9A880001E3332 /* Build configuration list for PBXNativeTarget "SkeetsOSXTests" */ = {
 			isa = XCConfigurationList;
@@ -605,6 +600,7 @@
 				5C68653419F9A880001E3332 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5CBDE7B619D9E90D004A4172 /* Build configuration list for PBXProject "Skeets" */ = {
 			isa = XCConfigurationList;
