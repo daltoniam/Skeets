@@ -100,10 +100,10 @@ To use Skeets in your project add the following 'Podfile' to your project
     xcodeproj 'YourProjectName.xcodeproj'
     platform :ios, '8.0'
 
-    pod 'Skeets', :git => "https://github.com/daltoniam/skeets.git", :branch => "cocoapods"
+    pod 'Skeets', :git => "https://github.com/daltoniam/skeets.git", :tag => "0.9.1"
 
     target 'YourProjectNameTests' do
-        pod 'Skeets', :git => "https://github.com/daltoniam/skeets.git", :branch => "cocoapods"
+        pod 'Skeets', :git => "https://github.com/daltoniam/skeets.git", :tag => "0.9.1"
     end
 
 Then run:
