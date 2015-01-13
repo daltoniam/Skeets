@@ -8,4 +8,5 @@ Pod::Spec.new do |s|
   s.source       = { :git => 'https://github.com/daltoniam/Skeets.git',  :tag => '0.9.1'}
   s.platform     = :ios, 8.0
   s.source_files = '*.{h,swift}'
+  s.dependency 'SwiftHTTP'
 end
