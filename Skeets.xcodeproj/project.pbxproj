@@ -39,7 +39,6 @@
 		5CBDE7D819D9E9DB004A4172 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = SOURCE_ROOT; };
 		5CBDE7DC19D9EA12004A4172 /* SkeetsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SkeetsTests.swift; path = Tests/SkeetsTests.swift; sourceTree = SOURCE_ROOT; };
 		5CBDE7DF19D9EC26004A4172 /* Skeets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Skeets.h; sourceTree = SOURCE_ROOT; };
-		5CE499A01A6578F10015B933 /* SwiftHTTP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftHTTP.framework; path = "../SwiftHTTP/build/Debug-iphoneos/SwiftHTTP.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,7 +77,6 @@
 		5CBDE7B219D9E90D004A4172 = {
 			isa = PBXGroup;
 			children = (
-				5CE499A01A6578F10015B933 /* SwiftHTTP.framework */,
 				5CBDE7BE19D9E90D004A4172 /* Skeets */,
 				5CBDE7C819D9E90D004A4172 /* SkeetsTests */,
 				5CBDE7BD19D9E90D004A4172 /* Products */,
