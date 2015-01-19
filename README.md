@@ -3,7 +3,7 @@ Skeets
 
 ![skeets](http://img1.wikia.nocookie.net/__cb20110522030251/marvel_dc/images/2/2b/Skeets_JLU_1.jpg)
 
-Skeets is a networking image library that fetches, caches, and displays images via HTTP in Swift. It is built off [SwiftHTTP](https://github.com/daltoniam/SwiftHTTP).
+Skeets is a networking image library that fetches, caches, and displays images via HTTP in Swift. It is built off [Skeets](https://github.com/daltoniam/Skeets).
 
 ## Features
 
@@ -84,13 +84,13 @@ ImageManager.sharedManager.cache.cleanDisk()
 
 Skeets requires at least iOS 8/OSX 10.10 or above.
 
-Skeets depends on [SwiftHTTP](https://github.com/daltoniam/SwiftHTTP). Make sure to import that framework as well before using Skeets.
+Skeets depends on [Skeets](https://github.com/daltoniam/Skeets). Make sure to import that framework as well before using Skeets.
 
 ## Installation
 
 ### Cocoapods
 
-### [CocoaPods](http://cocoapods.org/) 
+### [CocoaPods](http://cocoapods.org/)
 At this time, Cocoapods support for Swift frameworks is supported in a [pre-release](http://blog.cocoapods.org/Pod-Authors-Guide-to-CocoaPods-Frameworks/).
 
 To use Skeets in your project add the following 'Podfile' to your project
@@ -116,11 +116,11 @@ You can validate Skeets.podspec using:
     pod spec lint Skeets.podspec
 
 This should be tested with a sample project before releasing it. This can be done by adding the following line to a ```Podfile```:
-    
+
     pod 'Skeets', :git => 'https://github.com/username/skeets.git'
 
 Then run:
-    
+
     pod install
 
 If all goes well you are ready to release. First, create a tag and push:
@@ -157,6 +157,10 @@ Next open the `libs` folder and add the `Skeets.xcodeproj` to your Xcode project
 Simply grab the framework (either via git submodule or another package manager).
 
 Add the `Skeets.xcodeproj` to your Xcode project. Once that is complete, in your "Build Phases" add the `Skeets.framework` to your "Link Binary with Libraries" phase.
+
+### Add Copy Frameworks Phase
+
+If you are running this in an OSX app or on a physical iOS device you will need to make sure you add the `Skeets.framework` or `SkeetsOSX.framework` to be included in your app bundle. To do this, in Xcode, navigate to the target configuration window by clicking on the blue project icon, and selecting the application target under the "Targets" heading in the sidebar. In the tab bar at the top of that window, open the "Build Phases" panel. Expand the "Link Binary with Libraries" group, and add `Skeets.framework` or `SkeetsOSX.framework` depending on if you are building an iOS or OSX app. Click on the + button at the top left of the panel and select "New Copy Files Phase". Rename this new phase to "Copy Frameworks", set the "Destination" to "Frameworks", and add `Skeets.framework` or `SkeetsOSX.framework` respectively.
 
 ## TODOs
 
