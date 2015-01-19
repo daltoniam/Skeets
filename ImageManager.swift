@@ -101,6 +101,12 @@ public class ImageManager {
         }
     }
     
+    ///cancel the request, by simply removing the closures
+    public func cancel(url: String) {
+        let hash = self.hash(url)
+        self.pending.removeValueForKey(hash)
+    }
+    
     ///run all the success closures
     private func doSuccess(hash: String, data: NSData) {
         let holder = self.pending[hash]
