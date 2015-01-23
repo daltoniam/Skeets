@@ -11,5 +11,5 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.9'
   s.source_files = '*.swift'
   s.requires_arc = 'true'
-  s.dependency   = 'SwiftHTTP'
+  s.dependency 'SwiftHTTP'
 end
