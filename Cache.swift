@@ -46,8 +46,7 @@ class ImageNode {
     var next: ImageNode?
     var data: NSData!
     
-    init(_ data: NSData, _ hash: String) {
-        self.data = data
+    init(_ hash: String) {
         self.hash = hash
     }
 }
@@ -98,7 +97,7 @@ public class ImageCache: CacheProtocol {
     :returns: A NSData blob of the image
     */
     public func fromMemory(hash: String) -> NSData? {
-        let node = self.nodeMap[hash]
+        let node = nodeMap[hash]
         if let n = node {
             addToFront(n)
             return n.data
@@ -169,15 +168,15 @@ public class ImageCache: CacheProtocol {
     
     */
     public func add(hash: String, data: NSData) {
-        var node: ImageNode! = self.nodeMap[hash]
-        if node != nil {
-            node.data = data
-        } else {
-            node = ImageNode(data,hash)
-            self.nodeMap[hash] = node
+        var node: ImageNode! = nodeMap[hash]
+        if node == nil {
+            node = ImageNode(hash)
         }
+        node.data = data
+        nodeMap.removeValueForKey(hash)
+        nodeMap[hash] = node
         addToFront(node)
-        if self.nodeMap.count > self.imageCount {
+        if nodeMap.count > self.imageCount {
             prune()
         }
     }
