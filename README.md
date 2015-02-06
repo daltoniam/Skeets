@@ -45,7 +45,7 @@ ImageManager.sharedManager.cache.diskDirectory = "\(paths[0])/ImageCache"
 ImageManager.sharedManager.cache.cleanDisk()
 
 //fetch the image
-ImageManager.sharedManager.fetch("http://vluxe.io/assets/images/logo.png",
+ImageManager.fetch("http://vluxe.io/assets/images/logo.png",
     progress: { (status: Double) in
         println("updating some UI for this: \(status)") //useful if you have some kind of progress dialog as the image loads
     },success: { (data: NSData) in

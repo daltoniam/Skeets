@@ -159,6 +159,12 @@ public class ImageManager {
         }
         return "\(hash)"
     }
+    
+    //convenience method so you don't have to call "ImageManager.sharedManager" everytime you want to fetch an image
+    public class func fetch(url: String, progress:((Double) -> Void)!, success:((NSData) -> Void)!, failure:((NSError) -> Void)!) {
+        ImageManager.sharedManager.fetch(url, progress: progress, success: success, failure: failure)
+    }
+    
     ///Image manager singleton to manage displaying/caching images.
     ///This is normally the primary vehicle for displaying your images.
     public class var sharedManager : ImageManager {
