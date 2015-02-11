@@ -8,8 +8,8 @@ Pod::Spec.new do |s|
   s.source       = { :git => 'https://github.com/daltoniam/Skeets.git',  :tag => "#{s.version}" }
   s.social_media_url = 'http://twitter.com/daltoniam'
   s.ios.deployment_target = '8.0'
-  s.osx.deployment_target = '10.9'
+  #s.osx.deployment_target = '10.9'
   s.source_files = '*.swift'
   s.requires_arc = 'true'
-  s.dependency 'SwiftHTTP'
+  s.dependency "SwiftHTTP", "~> 0.9.2"
 end
