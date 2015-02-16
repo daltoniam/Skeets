@@ -121,7 +121,7 @@ public class ImageCache: CacheProtocol {
             let fileManager = NSFileManager.defaultManager()
             if fileManager.fileExistsAtPath(cachePath) {
                 let attrs = fileManager.attributesOfItemAtPath(cachePath, error: nil)
-                let modifyDate = attrs?[NSFileModificationDate] as NSDate
+                let modifyDate = attrs?[NSFileModificationDate] as! NSDate
                 if modifyDate.laterDate(expireDate).isEqualToDate(expireDate) {
                     fileManager.removeItemAtPath(cachePath, error: nil)
                     failure()

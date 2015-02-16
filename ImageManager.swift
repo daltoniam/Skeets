@@ -148,11 +148,11 @@ public class ImageManager {
     ///Hashes the url so it can be saved to disk.
     private func hash(u: String) -> String {
         var url = u
-        let len = countElements(url)-1
+        let len = count(url)-1
         if url[advance(url.startIndex,len)] == "/" {
             url = url[url.startIndex..<advance(url.startIndex,len)]
         }
-        let size: Int = countElements(url)
+        let size: Int = count(url)
         var hash: Int64 = Int64(size / 2)
         for codeUnit in url.utf8 {
             hash = hash + (Int(codeUnit) * 101)
