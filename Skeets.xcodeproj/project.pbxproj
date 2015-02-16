@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5C68652719F9A880001E3332 /* SkeetsOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C68651C19F9A880001E3332 /* SkeetsOSX.framework */; };
+		5C68652719F9A880001E3332 /* Skeets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C68651C19F9A880001E3332 /* Skeets.framework */; };
 		5C68653519F9A8ED001E3332 /* SkeetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7DC19D9EA12004A4172 /* SkeetsTests.swift */; };
 		5C68653619F9A8F5001E3332 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7D719D9E9DB004A4172 /* Cache.swift */; };
 		5C68653719F9A8F5001E3332 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7D819D9E9DB004A4172 /* ImageManager.swift */; };
@@ -29,7 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5C68651C19F9A880001E3332 /* SkeetsOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SkeetsOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C68651C19F9A880001E3332 /* Skeets.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Skeets.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C68652619F9A880001E3332 /* SkeetsOSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkeetsOSXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CBDE7BC19D9E90D004A4172 /* Skeets.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Skeets.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CBDE7C019D9E90D004A4172 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -53,7 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C68652719F9A880001E3332 /* SkeetsOSX.framework in Frameworks */,
+				5C68652719F9A880001E3332 /* Skeets.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,7 +88,7 @@
 			children = (
 				5CBDE7BC19D9E90D004A4172 /* Skeets.framework */,
 				5CBDE7C719D9E90D004A4172 /* SkeetsTests.xctest */,
-				5C68651C19F9A880001E3332 /* SkeetsOSX.framework */,
+				5C68651C19F9A880001E3332 /* Skeets.framework */,
 				5C68652619F9A880001E3332 /* SkeetsOSXTests.xctest */,
 			);
 			name = Products;
@@ -167,7 +167,7 @@
 			);
 			name = SkeetsOSX;
 			productName = SkeetsOSX;
-			productReference = 5C68651C19F9A880001E3332 /* SkeetsOSX.framework */;
+			productReference = 5C68651C19F9A880001E3332 /* Skeets.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		5C68652519F9A880001E3332 /* SkeetsOSXTests */ = {
@@ -361,7 +361,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Skeets;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
@@ -382,7 +382,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Skeets;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
