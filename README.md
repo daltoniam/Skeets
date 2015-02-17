@@ -3,7 +3,7 @@ Skeets
 
 ![skeets](http://img1.wikia.nocookie.net/__cb20110522030251/marvel_dc/images/2/2b/Skeets_JLU_1.jpg)
 
-Skeets is a networking image library that fetches, caches, and displays images via HTTP in Swift. It is built off [Skeets](https://github.com/daltoniam/Skeets).
+Skeets is a networking image library that fetches, caches, and displays images via HTTP in Swift. It is built off [SwiftHTTP](https://github.com/daltoniam/SwiftHTTP).
 
 ## Features
 
@@ -21,10 +21,7 @@ Full article here: [Vluxe](http://vluxe.io/skeets.html)
 First thing is to import the framework. See the Installation instructions, on how to add the framework to your project.
 
 ```swift
-//iOS
 import Skeets
-//OS X
-import SkeetsOSX
 ```
 
 Once imported, you can start requesting images.
@@ -84,7 +81,7 @@ ImageManager.sharedManager.cache.cleanDisk()
 
 Skeets requires at least iOS 8/OSX 10.10 or above.
 
-Skeets depends on [Skeets](https://github.com/daltoniam/Skeets). Make sure to import that framework as well before using Skeets.
+Skeets depends on [SwiftHTTP](https://github.com/daltoniam/SwiftHTTP). Make sure to import that framework as well before using Skeets.
 
 ## Installation
 
@@ -147,6 +144,7 @@ First see the [installation docs](https://github.com/acmacalister/Rogue) for how
 To install Skeets run the command below in the directory you created the rogue file.
 
 ```
+rogue add https://github.com/daltoniam/SwiftHTTP
 rogue add https://github.com/daltoniam/Skeets
 ```
 
