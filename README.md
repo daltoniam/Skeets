@@ -47,7 +47,10 @@ ImageManager.fetch("http://vluxe.io/assets/images/logo.png",
         println("updating some UI for this: \(status)") //useful if you have some kind of progress dialog as the image loads
     },success: { (data: NSData) in
         println("got an image!")
-        imageView.image = UIImage(data: data) //set the image data
+        // Do this on the main thread since we're async right now
+        dispatch_async(dispatch_get_main_queue(), {
+            imageView.image = UIImage(data: data) //set the image data
+        })
     }, failure: { (error: NSError) in
         println("failed to get an image: \(error)")
 })
