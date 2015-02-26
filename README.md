@@ -53,6 +53,14 @@ ImageManager.fetch("http://vluxe.io/assets/images/logo.png",
 })
 ```
 
+## Cancel Request
+
+Fetch requests can be cancelled when needed. This simply causes the closures not to be called.
+
+```swift
+ImageManager.cancel("http://vluxe.io/assets/images/logo.png")
+```
+
 ## Custom Cache
 
 Skeets also supports customized caching and protocols. It is possible to implement your own custom cache by implementing the `CacheProtocol`. There is also a powerful default cache provided with a few customization options.

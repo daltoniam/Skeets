@@ -83,12 +83,18 @@ public class ImageManager {
                     //lastly fetch from the network asynchronously
                     let task = HTTPTask()
                     task.download(url, parameters: nil, progress: { (status: Double) in
-                        self.doProgress(hash, status: status)
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.doProgress(hash, status: status)
+                        })
                         }, success: { (response: HTTPResponse) in
                             self.cache.add(hash, url: response.responseObject! as! NSURL)
-                            self.doSuccess(hash, data: self.cache.fromMemory(hash)!)
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.doSuccess(hash, data: self.cache.fromMemory(hash)!)
+                            })
                         }, failure: { (error: NSError, response: HTTPResponse?) in
-                            self.doFailure(hash, error: error)
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.doFailure(hash, error: error)
+                            })
                     })
             })
         } else if var array = self.pending[hash] {
@@ -156,9 +162,14 @@ public class ImageManager {
         return "\(hash)"
     }
     
-    //convenience method so you don't have to call "ImageManager.sharedManager" everytime you want to fetch an image
+    ///convenience method so you don't have to call "ImageManager.sharedManager" everytime you want to fetch an image
     public class func fetch(url: String, progress:((Double) -> Void)!, success:((NSData) -> Void)!, failure:((NSError) -> Void)!) {
         ImageManager.sharedManager.fetch(url, progress: progress, success: success, failure: failure)
+    }
+    
+    ///convenience method so you don't have to call "ImageManager.sharedManager" everytime you want to cancel an image
+    public class func cancel(url: String) {
+        ImageManager.sharedManager.cancel(url)
     }
     
     ///Image manager singleton to manage displaying/caching images.
