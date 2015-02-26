@@ -55,7 +55,7 @@ ImageManager.fetch("http://vluxe.io/assets/images/logo.png",
 
 ## Cancel Request
 
-Fetch Request can be cancelled when needed.
+Fetch requests can be cancelled when needed. This simply causes the closures not to be called.
 
 ```swift
 ImageManager.cancel("http://vluxe.io/assets/images/logo.png")
