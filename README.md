@@ -95,49 +95,19 @@ Skeets depends on [SwiftHTTP](https://github.com/daltoniam/SwiftHTTP). Make sure
 
 ### Cocoapods
 
-### [CocoaPods](http://cocoapods.org/)
-At this time, Cocoapods support for Swift frameworks is supported in a [pre-release](http://blog.cocoapods.org/Pod-Authors-Guide-to-CocoaPods-Frameworks/).
+Check out [Get Started](http://cocoapods.org/) tab on [cocoapods.org](http://cocoapods.org/).
 
 To use Skeets in your project add the following 'Podfile' to your project
 
-    source 'https://github.com/CocoaPods/Specs.git'
+	source 'https://github.com/CocoaPods/Specs.git'
+	platform :ios, '8.0'
+	use_frameworks!
 
-    xcodeproj 'YourProjectName.xcodeproj'
-    platform :ios, '8.0'
-
-    pod 'Skeets', :git => "https://github.com/daltoniam/skeets.git", :tag => "0.9.1"
-
-    target 'YourProjectNameTests' do
-        pod 'Skeets', :git => "https://github.com/daltoniam/skeets.git", :tag => "0.9.1"
-    end
+	pod 'Skeets', '~> 0.9.2'
 
 Then run:
 
     pod install
-
-#### Updating the Cocoapod
-You can validate Skeets.podspec using:
-
-    pod spec lint Skeets.podspec
-
-This should be tested with a sample project before releasing it. This can be done by adding the following line to a ```Podfile```:
-
-    pod 'Skeets', :git => 'https://github.com/username/skeets.git'
-
-Then run:
-
-    pod install
-
-If all goes well you are ready to release. First, create a tag and push:
-
-    git tag 'version'
-    git push --tags
-
-Once the tag is available you can send the library to the Specs repo. For this you'll have to follow the instructions in [Getting Setup with Trunk](http://guides.cocoapods.org/making/getting-setup-with-trunk.html).
-
-    pod trunk push Skeets.podspec
-
-
 
 ### Carthage
 
