@@ -10,7 +10,7 @@
 import Foundation
 import SwiftHTTP
 
-///This stores the blocks that come from the fetch method. 
+///This stores the blocks that come from the fetch method.
 ///This is used to ensure only one request goes out for multiple of the same url.
 private class BlockHolder {
     var progress:((Double) -> Void)?
@@ -58,7 +58,7 @@ public class ImageManager {
     :param: progress The closure that is run when reporting download progress via HTTP.
     :param: success The closure that is run on a sucessful image retrieval.
     :param: failure The closure that is run on a failed HTTP Request.
-
+    
     */
     public func fetch(url: String, progress:((Double) -> Void)!, success:((NSData) -> Void)!, failure:((NSError) -> Void)!) {
         let hash = self.hash(url)
@@ -89,7 +89,9 @@ public class ImageManager {
                         }, success: { (response: HTTPResponse) in
                             self.cache.add(hash, url: response.responseObject! as NSURL)
                             dispatch_async(dispatch_get_main_queue(), {
-                                self.doSuccess(hash, data: self.cache.fromMemory(hash)!)
+                                if let d = self.cache.fromMemory(hash) {
+                                    self.doSuccess(hash, data: d)
+                                }
                             })
                         }, failure: { (error: NSError, response: HTTPResponse?) in
                             dispatch_async(dispatch_get_main_queue(), {
@@ -176,8 +178,8 @@ public class ImageManager {
     ///This is normally the primary vehicle for displaying your images.
     public class var sharedManager : ImageManager {
         
-    struct Static {
-        static let instance : ImageManager = ImageManager(cacheDirectory: "")
+        struct Static {
+            static let instance : ImageManager = ImageManager(cacheDirectory: "")
         }
         return Static.instance
     }
