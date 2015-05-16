@@ -86,18 +86,19 @@ public class ImageManager {
                         dispatch_async(dispatch_get_main_queue(), {
                             self.doProgress(hash, status: status)
                         })
-                        }, success: { (response: HTTPResponse) in
+                        }, completionHandler: { (response: HTTPResponse) in
+                            if let err = response.error {
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    self.doFailure(hash, error: err)
+                                })
+                            }
                             self.cache.add(hash, url: response.responseObject! as! NSURL)
                             dispatch_async(dispatch_get_main_queue(), {
                                 if let d = self.cache.fromMemory(hash) {
                                     self.doSuccess(hash, data: d)
                                 }
                             })
-                        }, failure: { (error: NSError, response: HTTPResponse?) in
-                            dispatch_async(dispatch_get_main_queue(), {
-                                self.doFailure(hash, error: error)
-                            })
-                    })
+                        })
             })
         } else if var array = self.pending[hash] {
             array.append(BlockHolder(progress: progress, success: success, failure: failure))
