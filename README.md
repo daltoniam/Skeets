@@ -91,6 +91,8 @@ Skeets requires at least iOS 8/OSX 10.10 or above.
 
 Skeets depends on [SwiftHTTP](https://github.com/daltoniam/SwiftHTTP). Make sure to import that framework as well before using Skeets.
 
+If you encounter an issue with Skeets not building becuase SwiftHTTP can not be found, make sure to manually select SwiftHTTP framework from the build dropdown and build it. Then build your app again. This will cause the issue of SwiftHTTP not being found to be resolved.
+
 ## Installation
 
 ### Cocoapods
@@ -103,7 +105,7 @@ To use Skeets in your project add the following 'Podfile' to your project
 	platform :ios, '8.0'
 	use_frameworks!
 
-	pod 'Skeets', '~> 0.9.2'
+	pod 'Skeets', '~> 0.9.5'
 
 Then run:
 
