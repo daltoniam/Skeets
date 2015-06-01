@@ -157,11 +157,16 @@ public class ImageManager {
         if url[advance(url.startIndex,len)] == "/" {
             url = url[url.startIndex..<advance(url.startIndex,len)]
         }
-        let size: Int = count(url)
-        var hash: Int64 = Int64(size / 2)
+        var hash: UInt32 = 0
         for codeUnit in url.utf8 {
-            hash = hash + (Int(codeUnit) * 101)
+            hash += UInt32(codeUnit)
+            hash ^= (hash >> 6)
         }
+        
+        hash += (hash << 3)
+        hash ^= (hash >> 11)
+        hash += (hash << 15)
+        
         return "\(hash)"
     }
     
