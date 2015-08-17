@@ -91,13 +91,14 @@ public class ImageManager {
                                 dispatch_async(dispatch_get_main_queue(), {
                                     self.doFailure(hash, error: err)
                                 })
+                            } else {
+                                self.cache.add(hash, url: response.responseObject! as! NSURL)
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    if let d = self.cache.fromMemory(hash) {
+                                        self.doSuccess(hash, data: d)
+                                    }
+                                })
                             }
-                            self.cache.add(hash, url: response.responseObject! as! NSURL)
-                            dispatch_async(dispatch_get_main_queue(), {
-                                if let d = self.cache.fromMemory(hash) {
-                                    self.doSuccess(hash, data: d)
-                                }
-                            })
                         })
             })
         } else if var array = self.pending[hash] {
