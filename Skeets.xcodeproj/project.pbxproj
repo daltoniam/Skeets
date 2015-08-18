@@ -16,6 +16,8 @@
 		5CBDE7DA19D9E9DC004A4172 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7D819D9E9DB004A4172 /* ImageManager.swift */; };
 		5CBDE7DE19D9EA1C004A4172 /* SkeetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDE7DC19D9EA12004A4172 /* SkeetsTests.swift */; };
 		5CBDE7E019D9EC26004A4172 /* Skeets.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CBDE7DF19D9EC26004A4172 /* Skeets.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9DF28E41B82CDFD00DCE85F /* SKImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DF28E31B82CDFD00DCE85F /* SKImageView.swift */; };
+		D9DF28E51B82CDFD00DCE85F /* SKImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DF28E31B82CDFD00DCE85F /* SKImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +41,7 @@
 		5CBDE7D819D9E9DB004A4172 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = SOURCE_ROOT; };
 		5CBDE7DC19D9EA12004A4172 /* SkeetsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SkeetsTests.swift; path = Tests/SkeetsTests.swift; sourceTree = SOURCE_ROOT; };
 		5CBDE7DF19D9EC26004A4172 /* Skeets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Skeets.h; sourceTree = SOURCE_ROOT; };
+		D9DF28E31B82CDFD00DCE85F /* SKImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKImageView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +103,7 @@
 				5CBDE7DF19D9EC26004A4172 /* Skeets.h */,
 				5CBDE7D719D9E9DB004A4172 /* Cache.swift */,
 				5CBDE7D819D9E9DB004A4172 /* ImageManager.swift */,
+				D9DF28E31B82CDFD00DCE85F /* SKImageView.swift */,
 				5CBDE7BF19D9E90D004A4172 /* Supporting Files */,
 			);
 			path = Skeets;
@@ -229,6 +233,8 @@
 		5CBDE7B319D9E90D004A4172 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = vluxe;
 				TargetAttributes = {
@@ -303,6 +309,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C68653619F9A8F5001E3332 /* Cache.swift in Sources */,
+				D9DF28E51B82CDFD00DCE85F /* SKImageView.swift in Sources */,
 				5C68653719F9A8F5001E3332 /* ImageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CBDE7D919D9E9DB004A4172 /* Cache.swift in Sources */,
+				D9DF28E41B82CDFD00DCE85F /* SKImageView.swift in Sources */,
 				5CBDE7DA19D9E9DC004A4172 /* ImageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

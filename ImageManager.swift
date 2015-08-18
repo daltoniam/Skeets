@@ -8,7 +8,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 import Foundation
-import SwiftHTTP
 
 ///This stores the blocks that come from the fetch method.
 ///This is used to ensure only one request goes out for multiple of the same url.
@@ -22,8 +21,9 @@ private class BlockHolder {
         self.failure = failure
     }
 }
+
 ///This is the main class. It handles interaction with cache and ensuring only one request goes out for multiples of the same url
-public class ImageManager {
+public class ImageManager : NSObject, NSURLSessionDownloadDelegate, NSURLSessionDelegate {
     ///The cache. This is anything that responses to the cache protocol. By default it uses the provided ImageCache.
     public var cache: CacheProtocol
     
@@ -33,7 +33,7 @@ public class ImageManager {
     /**
     Initializes a new ImageManager
     
-    :param: cacheDirectory is the directory on disk to save cached images to.
+    - parameter cacheDirectory: is the directory on disk to save cached images to.
     */
     public init(cacheDirectory: String) {
         var dir = cacheDirectory
@@ -50,14 +50,35 @@ public class ImageManager {
         }
         cache = ImageCache(dir)
     }
+    
+    ///convenience method so you don't have to call "ImageManager.sharedManager" everytime you want to fetch an image
+    public class func fetch(url: String, progress:((Double) -> Void)!, success:((NSData) -> Void)!, failure:((NSError) -> Void)!) {
+        ImageManager.sharedManager.fetch(url, progress: progress, success: success, failure: failure)
+    }
+    
+    ///convenience method so you don't have to call "ImageManager.sharedManager" everytime you want to cancel an image
+    public class func cancel(url: String) {
+        ImageManager.sharedManager.cancel(url)
+    }
+    
+    ///Image manager singleton to manage displaying/caching images.
+    ///This is normally the primary vehicle for displaying your images.
+    public class var sharedManager : ImageManager {
+        
+        struct Static {
+            static let instance : ImageManager = ImageManager(cacheDirectory: "")
+        }
+        return Static.instance
+    }
+    
     /**
     Fetches the image from the nearest location avaliable.
     
-    :param: url The url you would like to make a request to.
-    :param: method The HTTP method/verb for the request.
-    :param: progress The closure that is run when reporting download progress via HTTP.
-    :param: success The closure that is run on a sucessful image retrieval.
-    :param: failure The closure that is run on a failed HTTP Request.
+    - parameter url: The url you would like to make a request to.
+    - parameter method: The HTTP method/verb for the request.
+    - parameter progress: The closure that is run when reporting download progress via HTTP.
+    - parameter success: The closure that is run on a sucessful image retrieval.
+    - parameter failure: The closure that is run on a failed HTTP Request.
     
     */
     public func fetch(url: String, progress:((Double) -> Void)!, success:((NSData) -> Void)!, failure:((NSError) -> Void)!) {
@@ -70,6 +91,7 @@ public class ImageManager {
             }
             return
         }
+        
         //The pending Dictionary makes sure we don't run multiple request for the same image
         //so we check that to make sure we aren't already requesting that image
         if self.pending[hash] == nil {
@@ -81,12 +103,12 @@ public class ImageManager {
                 self.doSuccess(hash, data: d)
                 }, failure: { (Void) in
                     //lastly fetch from the network asynchronously
-                    let task = HTTPTask()
-                    task.download(url, parameters: nil, progress: { (status: Double) in
+                    
+                    self.fetchFromNetwork(url, progress: { (status: Double) in
                         dispatch_async(dispatch_get_main_queue(), {
                             self.doProgress(hash, status: status)
                         })
-                        }, completionHandler: { (response: HTTPResponse) in
+                        }, completionHandler: { () in
                             if let err = response.error {
                                 dispatch_async(dispatch_get_main_queue(), {
                                     self.doFailure(hash, error: err)
@@ -154,7 +176,7 @@ public class ImageManager {
     ///Hashes the url so it can be saved to disk.
     private func hash(u: String) -> String {
         var url = u
-        let len = count(url)-1
+        let len = url.characters.count-1
         if url[advance(url.startIndex,len)] == "/" {
             url = url[url.startIndex..<advance(url.startIndex,len)]
         }
@@ -171,23 +193,46 @@ public class ImageManager {
         return "\(hash)"
     }
     
-    ///convenience method so you don't have to call "ImageManager.sharedManager" everytime you want to fetch an image
-    public class func fetch(url: String, progress:((Double) -> Void)!, success:((NSData) -> Void)!, failure:((NSError) -> Void)!) {
-        ImageManager.sharedManager.fetch(url, progress: progress, success: success, failure: failure)
-    }
+    /**
+    Creates a random string to use for the identifier of the background download/upload requests.
     
-    ///convenience method so you don't have to call "ImageManager.sharedManager" everytime you want to cancel an image
-    public class func cancel(url: String) {
-        ImageManager.sharedManager.cancel(url)
-    }
-    
-    ///Image manager singleton to manage displaying/caching images.
-    ///This is normally the primary vehicle for displaying your images.
-    public class var sharedManager : ImageManager {
-        
-        struct Static {
-            static let instance : ImageManager = ImageManager(cacheDirectory: "")
+    :returns: Identifier String.
+    */
+    private func createBackgroundIdent() -> String {
+        let letters = "abcdefghijklmnopqurstuvwxyz"
+        var str = ""
+        for var i = 0; i < 14; i++ {
+            let start = Int(arc4random() % 14)
+            str.append(letters[advance(letters.startIndex,start)])
         }
-        return Static.instance
+        return "com.vluxe.skeets.request.\(str)"
+    }
+    
+    /// fetches the image url from the network.
+    private func fetchFromNetwork(url: String, progress:((Double) -> Void)!, completionHandler:(() -> Void)!) -> NSURLSessionDownloadTask? {
+        let ident = createBackgroundIdent()
+        let config = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier(ident)
+        let session = NSURLSession(configuration: config, delegate: self, delegateQueue: nil)
+        let task = session.downloadTaskWithRequest(NSURLRequest(URL: NSURL(string: url)!))
+        task.resume()
+        return task
+    }
+    
+    //MARK: Methods for background downloads
+    
+    // called when the background download of an image URL fails.
+    public func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+        
+    }
+    
+    // The background download finished and reports the url the data was saved to.
+    public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
+        //handleFinish(session, task: downloadTask, response: location)
+    }
+
+    
+    // Will report progress of background download
+    public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+        //handleProgress(session, totalBytesExpected: totalBytesExpectedToWrite, currentBytes:totalBytesWritten)
     }
 }
