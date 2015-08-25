@@ -159,8 +159,8 @@ public class ImageManager {
             url = url[url.startIndex..<advance(url.startIndex,len)]
         }
         var hash: UInt32 = 0
-        for codeUnit in url.utf8 {
-            hash += UInt32(codeUnit)
+        for (index, codeUnit) in enumerate(url.utf8) {
+            hash += (UInt32(codeUnit) * UInt32(index))
             hash ^= (hash >> 6)
         }
         
