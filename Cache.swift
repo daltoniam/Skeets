@@ -83,7 +83,7 @@ public class ImageCache: CacheProtocol {
     /**
     Initializes a new ImageCache
     
-    :param: cacheDirectory is the directory on disk to save cached images to.
+    - parameter cacheDirectory: is the directory on disk to save cached images to.
     */
     init(_ cacheDirectory: String) {
         self.diskDirectory = cacheDirectory
@@ -92,9 +92,9 @@ public class ImageCache: CacheProtocol {
     /**
     Checks the nodeMap for an image
     
-    :param: hash is the hashed url of the requested image url.
+    - parameter hash: is the hashed url of the requested image url.
     
-    :returns: A NSData blob of the image
+    - returns: A NSData blob of the image
     */
     public func fromMemory(hash: String) -> NSData? {
         let node = nodeMap[hash]
@@ -108,9 +108,9 @@ public class ImageCache: CacheProtocol {
     /**
     Checks the cacheDirectory for an image. This is done async so the possibly slow IO does not block the main thread.
     
-    :param: hash is the hashed url of the requested image url.
-    :param: success is the closure run when the image is found on disk.
-    :param: failure is the closure run when the image is not found on disk.
+    - parameter hash: is the hashed url of the requested image url.
+    - parameter success: is the closure run when the image is found on disk.
+    - parameter failure: is the closure run when the image is not found on disk.
     
     */
     public func fromDisk(hash: String,success:((NSData) -> Void), failure:((Void) -> Void)) {
@@ -120,10 +120,18 @@ public class ImageCache: CacheProtocol {
             let expireDate = NSDate(timeIntervalSinceNow: NSTimeInterval(-self.diskAge))
             let fileManager = NSFileManager.defaultManager()
             if fileManager.fileExistsAtPath(cachePath) {
-                let attrs = fileManager.attributesOfItemAtPath(cachePath, error: nil)
+                let attrs: [NSObject: AnyObject]?
+                do {
+                    attrs = try fileManager.attributesOfItemAtPath(cachePath)
+                } catch _ {
+                    attrs = nil
+                }
                 let modifyDate = attrs?[NSFileModificationDate] as! NSDate
                 if modifyDate.laterDate(expireDate).isEqualToDate(expireDate) {
-                    fileManager.removeItemAtPath(cachePath, error: nil)
+                    do {
+                        try fileManager.removeItemAtPath(cachePath)
+                    } catch _ {
+                    }
                     failure()
                 } else {
                     let data = fileManager.contentsAtPath(cachePath)
@@ -144,16 +152,22 @@ public class ImageCache: CacheProtocol {
     Moves an image URL from the temp directory to the cacheDirectory. This is because HTTP download requests save images to the temp directory when being download.
     The image is then added to the in-memory cache.
     
-    :param: hash is the hashed url of the requested image url.
-    :param: url is the location to the image in the temp directory.
+    - parameter hash: is the hashed url of the requested image url.
+    - parameter url: is the location to the image in the temp directory.
     
     */
     public func add(hash: String, url: NSURL) {
         let cachePath = "\(self.diskDirectory)/\(hash)"
         let moveUrl = NSURL(fileURLWithPath: cachePath)
         let fileManager = NSFileManager.defaultManager()
-        fileManager.removeItemAtURL(moveUrl!, error: nil)
-        fileManager.moveItemAtURL(url, toURL: moveUrl!, error: nil)
+        do {
+            try fileManager.removeItemAtURL(moveUrl)
+        } catch _ {
+        }
+        do {
+            try fileManager.moveItemAtURL(url, toURL: moveUrl)
+        } catch _ {
+        }
         let data = fileManager.contentsAtPath(cachePath)
         if let d = data {
             add(hash, data: d)
@@ -163,8 +177,8 @@ public class ImageCache: CacheProtocol {
     /**
     Adds an image to the in-memory cache.
     
-    :param: hash is the hashed url of the requested image url.
-    :param: data is the image data to add.
+    - parameter hash: is the hashed url of the requested image url.
+    - parameter data: is the image data to add.
     
     */
     public func add(hash: String, data: NSData) {
@@ -203,12 +217,12 @@ public class ImageCache: CacheProtocol {
             let expireDate = NSDate(timeIntervalSinceNow: NSTimeInterval(-self.diskAge))
             let resources = [NSURLIsDirectoryKey, NSURLContentModificationDateKey, NSURLTotalFileAllocatedSizeKey]
             
-            let enumerator = fileManager.enumeratorAtURL(diskUrl!, includingPropertiesForKeys: resources,
+            let enumerator = fileManager.enumeratorAtURL(diskUrl, includingPropertiesForKeys: resources,
                 options: NSDirectoryEnumerationOptions.SkipsHiddenFiles, errorHandler: nil)
             let array = enumerator?.allObjects
             for file in array! {
                 if let fileUrl = file as? NSURL {
-                    let values = fileUrl.resourceValuesForKeys(resources, error: nil)!
+                    let values = try! fileUrl.resourceValuesForKeys(resources)
                     if let num = values[NSURLIsDirectoryKey] as? NSNumber  {
                         if num.boolValue {
                             continue
@@ -216,7 +230,10 @@ public class ImageCache: CacheProtocol {
                     }
                     if let modifyDate = values[NSURLContentModificationDateKey] as? NSDate  {
                         if modifyDate.laterDate(expireDate).isEqualToDate(expireDate) {
-                            fileManager.removeItemAtURL(fileUrl, error: nil)
+                            do {
+                                try fileManager.removeItemAtURL(fileUrl)
+                            } catch _ {
+                            }
                         }
                     }
                 }
@@ -239,7 +256,10 @@ public class ImageCache: CacheProtocol {
     private func createDiskDirectory() {
         let fileManager = NSFileManager.defaultManager()
         if !fileManager.fileExistsAtPath(self.diskDirectory) {
-            fileManager.createDirectoryAtPath(self.diskDirectory, withIntermediateDirectories: false, attributes: nil, error: nil)
+            do {
+                try fileManager.createDirectoryAtPath(self.diskDirectory, withIntermediateDirectories: false, attributes: nil)
+            } catch _ {
+            }
         }
     }
     
